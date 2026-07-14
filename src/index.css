@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+
+/* ── "In Transit" design tokens — violet/lime signal on near-black ── */
+@theme {
+  --color-bg: #0b0b12;
+  --color-bg-soft: #12121c;
+  --color-ink: #ededf2;
+  --color-muted: #8a8aa0;
+  --color-violet: #8b5cf6;
+  --color-violet-soft: #a78bfa;
+  --color-lime: #c6ff3d;
+  --color-line: rgba(255, 255, 255, 0.08);
+
+  --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+  }
+
+  ::selection {
+    background: var(--color-lime);
+    color: #0b0b12;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-lime);
+    outline-offset: 3px;
+  }
+}
+
+/* Custom cursor: hide native cursor when our cursor is active (desktop only) */
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+
+/* Faint dot-grid used as the static (mobile / reduced-motion) backdrop */
+.dot-grid {
+  background-image: radial-gradient(
+    rgba(139, 92, 246, 0.18) 1px,
+    transparent 1px
+  );
+  background-size: 34px 34px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

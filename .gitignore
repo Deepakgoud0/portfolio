@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.vite/
+tsconfig.tsbuildinfo
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# OS / editor
+.DS_Store
+.idea/
+*.swp
+
+# Local screenshots / tooling
+.playwright-mcp/
+*.local.png
