@@ -5,11 +5,20 @@ import { telemetry } from "./cockpitBridge";
 
 // ── Identity + comms (edit these) ─────────────────────────────────────────
 const PILOT = { name: "Jagiryala Deepak Goud", role: "Full-Stack Engineer", callsign: "DG-01" };
+
+// Drop a PDF at public/resume.pdf and set this to "/resume.pdf" — until then the
+// Résumé tile is omitted rather than shipping a dead link.
+const RESUME_URL = "";
+
 const COMMS: { label: string; href: string; handle: string }[] = [
   { label: "GitHub", href: "https://github.com/Deepakgoud0", handle: "Deepakgoud0" },
-  { label: "LinkedIn", href: "#", handle: "add link" },
-  { label: "Résumé", href: "#", handle: "PDF ↓" },
-  { label: "Email", href: "mailto:hello@example.com", handle: "add email" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/deepakgoudjagiryala0212",
+    handle: "deepakgoudjagiryala0212",
+  },
+  { label: "Email", href: "mailto:deepakgoud1979@gmail.com", handle: "deepakgoud1979@gmail.com" },
+  ...(RESUME_URL ? [{ label: "Résumé", href: RESUME_URL, handle: "PDF ↓" }] : []),
 ];
 
 const DESTINATIONS = BODIES.filter((b) => b.project);
@@ -266,10 +275,12 @@ export function Cockpit() {
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
                 style={notch}
-                className="flex flex-col border border-white/10 bg-white/[0.03] px-2.5 py-1.5 transition-colors hover:border-lime/60 hover:bg-white/[0.06]"
+                className="flex max-w-[10.5rem] flex-col border border-white/10 bg-white/[0.03] px-2.5 py-1.5 transition-colors hover:border-lime/60 hover:bg-white/[0.06]"
               >
                 <span className="font-mono text-[11px] text-white/85">{c.label}</span>
-                <span className="font-mono text-[9px] text-white/35">{c.handle}</span>
+                <span className="truncate font-mono text-[9px] text-white/35" title={c.handle}>
+                  {c.handle}
+                </span>
               </a>
             ))}
           </div>
