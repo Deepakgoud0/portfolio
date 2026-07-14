@@ -54,6 +54,14 @@ export function Contact() {
           >
             Email
           </a>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border border-lime bg-lime/10 px-5 py-2.5 text-lime transition-colors hover:bg-lime hover:text-bg"
+          >
+            Résumé ↓
+          </a>
         </div>
       </Reveal>
 

@@ -6,9 +6,7 @@ import { telemetry } from "./cockpitBridge";
 // ── Identity + comms (edit these) ─────────────────────────────────────────
 const PILOT = { name: "Jagiryala Deepak Goud", role: "Full-Stack Engineer", callsign: "DG-01" };
 
-// Drop a PDF at public/resume.pdf and set this to "/resume.pdf" — until then the
-// Résumé tile is omitted rather than shipping a dead link.
-const RESUME_URL = "";
+const RESUME_URL = "/resume.pdf";
 
 const COMMS: { label: string; href: string; handle: string }[] = [
   { label: "GitHub", href: "https://github.com/Deepakgoud0", handle: "Deepakgoud0" },
