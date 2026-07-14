@@ -14,7 +14,7 @@ export function Contact() {
       </Reveal>
 
       <Reveal delay={0.05}>
-        <h2 className="max-w-4xl text-5xl md:text-8xl">
+        <h2 className="max-w-4xl break-words text-[10vw] sm:text-5xl md:text-8xl">
           Let's build
           <br />
           <span className="text-violet-soft">something.</span>

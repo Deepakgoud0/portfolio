@@ -33,7 +33,7 @@ export function Hero() {
           variants={rise}
           initial="hidden"
           animate="show"
-          className="text-[16vw] leading-[0.86] md:text-[8.5rem]"
+          className="text-[13.5vw] leading-[0.9] md:text-[8.5rem] md:leading-[0.86]"
           style={{ textShadow: "0 4px 60px rgba(11,11,18,0.7)" }}
         >
           Deepak

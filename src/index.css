@@ -26,8 +26,12 @@
     scroll-behavior: smooth;
   }
 
+  /* Decorative glow blobs are deliberately positioned off-canvas; clip at the
+     root too, or they add a horizontal scrollbar on narrow screens. */
+  html,
   body {
     overflow-x: hidden;
+    max-width: 100%;
   }
 
   h1,
