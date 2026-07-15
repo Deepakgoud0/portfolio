@@ -13,8 +13,9 @@ import { EarthDiveWatcher } from "./EarthDiveWatcher";
 import { Cockpit } from "./Cockpit";
 import { Autopilot } from "./Autopilot";
 import { AutopilotCam } from "./AutopilotCam";
+import { ShipsLog } from "./ShipsLog";
 import { bodyMeshes, telemetry } from "./cockpitBridge";
-import { clearFlyRequest } from "./focusStore";
+import { clearFlyRequest, setLogOpen } from "./focusStore";
 
 // Each scale/dive is its own chunk, fetched only when you actually travel there.
 // The solar system is what loads up front; MapLibre (the Earth dive) and the star
@@ -111,7 +112,7 @@ function LevelWatcher() {
 
 export function Universe() {
   const controls = useRef<CameraControlsImpl>(null);
-  const { mapOpen, level, blackHole, nebula } = useUniverseState();
+  const { mapOpen, level, blackHole, nebula, logOpen } = useUniverseState();
   const prevLevel = useRef(level);
 
   // Coming back down to the solar system from any higher scale: reframe the
@@ -151,6 +152,11 @@ export function Universe() {
 
       {/* guided auto-tour — driver + HUD, global across all scales */}
       <Autopilot />
+
+      {/* SHIP'S LOG dossier — top-level modal so it sits above every HUD layer */}
+      <AnimatePresence>
+        {logOpen && <ShipsLog onClose={() => setLogOpen(false)} />}
+      </AnimatePresence>
 
 
       {/* cosmic ladder — each rung crossfades in as you pull far enough out */}

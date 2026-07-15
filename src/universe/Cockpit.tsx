@@ -1,6 +1,6 @@
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { BODIES, type Body } from "./data";
-import { requestFly, requestHome, setFocus, useUniverseState } from "./focusStore";
+import { requestFly, requestHome, setFocus, setLogOpen, useUniverseState } from "./focusStore";
 import { telemetry } from "./cockpitBridge";
 
 // ── Identity + comms (edit these) ─────────────────────────────────────────
@@ -220,6 +220,16 @@ export function Cockpit() {
           </div>
         </div>
       )}
+
+      {/* ship's log — top left (mirrors recenter) */}
+      <button
+        onClick={() => setLogOpen(true)}
+        style={notch}
+        className="pointer-events-auto absolute left-5 top-5 border border-white/15 bg-black/55 px-3.5 py-2 font-mono text-[10px] uppercase tracking-widest text-white/70 backdrop-blur transition-colors hover:border-lime/60 hover:text-lime"
+      >
+        ▸ ship's log
+      </button>
+
 
       {/* recenter — top right */}
       <button

@@ -17,6 +17,7 @@ export interface State {
   blackHole: boolean; // SGR A* close-up (ray-marched) open
   nebula: string | null; // name of the nebula open for its volumetric close-up
   autopilot: boolean; // guided auto-tour running (any user input disengages it)
+  logOpen: boolean; // SHIP'S LOG dossier panel open
 }
 
 let state: State = {
@@ -29,6 +30,7 @@ let state: State = {
   blackHole: false,
   nebula: null,
   autopilot: false,
+  logOpen: false,
 };
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
@@ -61,6 +63,9 @@ export const focus = {
   },
   get autopilot() {
     return state.autopilot;
+  },
+  get logOpen() {
+    return state.logOpen;
   },
 };
 
@@ -96,10 +101,16 @@ export function setNebula(nebula: string | null) {
 }
 
 // The guided tour. Turning it off leaves the ship wherever it is, so the user
-// simply takes manual control from that view.
+// simply takes manual control from that view. Engaging closes the dossier.
 export function setAutopilot(autopilot: boolean) {
   if (state.autopilot === autopilot) return;
-  state = { ...state, autopilot };
+  state = { ...state, autopilot, logOpen: autopilot ? false : state.logOpen };
+  emit();
+}
+
+export function setLogOpen(logOpen: boolean) {
+  if (state.logOpen === logOpen) return;
+  state = { ...state, logOpen };
   emit();
 }
 
@@ -128,6 +139,7 @@ export function setLevel(level: number) {
     mapOpen: false,
     blackHole: false,
     nebula: null,
+    logOpen: false,
   };
   emit();
 }
@@ -141,6 +153,7 @@ if (import.meta.env.DEV) {
     setBlackHole,
     setNebula,
     setAutopilot,
+    setLogOpen,
     get state() {
       return state;
     },

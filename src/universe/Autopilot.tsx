@@ -141,9 +141,15 @@ export function Autopilot() {
   // re-offers the tour. One handler drives both the disengage and the idle timer.
   useEffect(() => {
     let idle: number;
+    // Don't auto-start the tour while the dossier is open — it would fly away
+    // and unmount the reading view. Re-check later instead.
+    const fire = () => {
+      if (focus.logOpen) idle = window.setTimeout(fire, IDLE_MS);
+      else setAutopilot(true);
+    };
     const arm = () => {
       clearTimeout(idle);
-      if (!reduced) idle = window.setTimeout(() => setAutopilot(true), IDLE_MS);
+      if (!reduced) idle = window.setTimeout(fire, IDLE_MS);
     };
     const onInput = () => {
       if (focus.autopilot) setAutopilot(false);
