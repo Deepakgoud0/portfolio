@@ -18,6 +18,7 @@ export function EarthDiveWatcher() {
 
   useFrame(() => {
     if (!controls) return;
+    if (focus.autopilot) return; // the tour manages the Earth dive itself
     const mapOpen = focus.mapOpen;
 
     // focus cleared → glide to the overview

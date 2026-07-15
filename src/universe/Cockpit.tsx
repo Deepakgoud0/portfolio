@@ -198,7 +198,7 @@ function ProjectCard({ body }: { body: Body }) {
 }
 
 export function Cockpit() {
-  const { level, key, mapOpen, blackHole } = useUniverseState();
+  const { level, key, mapOpen, blackHole, autopilot } = useUniverseState();
   // The cockpit is the home-base shell: shown while flying the solar system.
   if (level !== 1 || mapOpen || blackHole) return null;
 
@@ -209,15 +209,17 @@ export function Cockpit() {
     <div className="pointer-events-none fixed inset-0 z-[200]">
       <CanopyBrackets />
 
-      {/* top centre — flight mode tag + recenter */}
-      <div className="pointer-events-none absolute left-1/2 top-5 -translate-x-1/2 text-center">
-        <div className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/30">
-          ◇ manual flight ◇
+      {/* top centre — flight mode tag + recenter (hidden while the tour flies) */}
+      {!autopilot && (
+        <div className="pointer-events-none absolute left-1/2 top-5 -translate-x-1/2 text-center">
+          <div className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/30">
+            ◇ manual flight ◇
+          </div>
+          <div className="mt-1 font-mono text-[9px] tracking-widest text-white/20">
+            drag · scroll to zoom · scroll out to travel the cosmos
+          </div>
         </div>
-        <div className="mt-1 font-mono text-[9px] tracking-widest text-white/20">
-          drag · scroll to zoom · scroll out to travel the cosmos
-        </div>
-      </div>
+      )}
 
       {/* recenter — top right */}
       <button

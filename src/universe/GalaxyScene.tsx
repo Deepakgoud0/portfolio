@@ -9,6 +9,7 @@ import { buildArmNebulae, buildGalaxy, N_TOTAL, R_SUN, SUN_POS } from "./galaxyD
 import { makeNebulaTexture } from "./nebulaTexture";
 import { focus, setBlackHole, setLevel, useUniverseState } from "./focusStore";
 import { EntryTransition } from "./useEntryTransition";
+import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
 
 // Fly within this of the Sun (kpc) and we drop back to the stellar neighbourhood,
@@ -117,7 +118,7 @@ function ReturnWatcher() {
   }, [controls]);
 
   useFrame(() => {
-    if (focus.level !== 3) return;
+    if (focus.level !== 3 || focus.autopilot) return;
     if (camera.position.distanceTo(sun) < RETURN_DIST) setLevel(2);
     else if (camera.position.length() > LEAVE_DIST) setLevel(4); // distance to galactic centre (origin)
   });
@@ -154,6 +155,7 @@ export function GalaxyScene() {
           outStartDist={5}
         />
         <ReturnWatcher />
+        <AutopilotCam speed={0.06} />
         <EffectComposer>
           <Bloom intensity={0.6} luminanceThreshold={0.42} mipmapBlur radius={0.7} />
         </EffectComposer>

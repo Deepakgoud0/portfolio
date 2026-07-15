@@ -3,7 +3,8 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { CameraControls, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import type CameraControlsImpl from "camera-controls";
-import { setBlackHole } from "./focusStore";
+import { focus, setBlackHole } from "./focusStore";
+import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
 
 // ── Sagittarius A* — a ray-marched Schwarzschild black hole ─────────────────
@@ -203,6 +204,7 @@ function BlackHole() {
     if (import.meta.env.DEV) {
       (globalThis as unknown as { __bhControls?: unknown }).__bhControls = controls;
     }
+    if (focus.autopilot) return; // the tour opens and closes the black hole itself
     if (d < EXIT_DIST - 5) armed.current = true;
     if (armed.current && d > EXIT_DIST) setBlackHole(false);
   });
@@ -220,6 +222,7 @@ export function BlackHoleScene() {
       >
         <BlackHole />
         <CameraControls makeDefault minDistance={4.5} maxDistance={44} smoothTime={0.5} />
+        <AutopilotCam speed={0.12} />
         <CanvasCleanup />
       </Canvas>
 

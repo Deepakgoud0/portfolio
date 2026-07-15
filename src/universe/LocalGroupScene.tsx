@@ -9,6 +9,7 @@ import { SUN_POS } from "./galaxyData";
 import { spiralTexture, blobTexture } from "./galaxyTextures";
 import { focus, setLevel } from "./focusStore";
 import { EntryTransition } from "./useEntryTransition";
+import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
 
 // Fly back within this of the Milky Way (kpc) and the galaxy scene takes over.
@@ -141,7 +142,7 @@ function ReturnWatcher() {
   }, [controls]);
 
   useFrame(() => {
-    if (focus.level !== 4) return;
+    if (focus.level !== 4 || focus.autopilot) return;
     if (camera.position.length() < RETURN_DIST) setLevel(3); // near the Milky Way (home)
     else if (camera.position.distanceTo(GROUP_CENTER) > LEAVE_DIST) setLevel(5);
   });
@@ -207,6 +208,7 @@ export function LocalGroupScene() {
           outStartDist={130}
         />
         <ReturnWatcher />
+        <AutopilotCam speed={0.06} />
         <EffectComposer>
           <Bloom intensity={0.5} luminanceThreshold={0.3} mipmapBlur radius={0.6} />
         </EffectComposer>

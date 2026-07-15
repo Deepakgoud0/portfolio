@@ -60,6 +60,16 @@
   cursor: none !important;
 }
 
+/* Autopilot HUD: the per-step dwell progress bar fills over the step's duration */
+@keyframes ap-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 /* Faint dot-grid used as the static (mobile / reduced-motion) backdrop */
 .dot-grid {
   background-image: radial-gradient(

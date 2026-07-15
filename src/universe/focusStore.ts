@@ -16,6 +16,7 @@ export interface State {
   flyRequest: string | null; // NAV COMPUTER asked to fly to this body (consumed in-canvas)
   blackHole: boolean; // SGR A* close-up (ray-marched) open
   nebula: string | null; // name of the nebula open for its volumetric close-up
+  autopilot: boolean; // guided auto-tour running (any user input disengages it)
 }
 
 let state: State = {
@@ -27,6 +28,7 @@ let state: State = {
   flyRequest: null,
   blackHole: false,
   nebula: null,
+  autopilot: false,
 };
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
@@ -56,6 +58,9 @@ export const focus = {
   },
   get nebula() {
     return state.nebula;
+  },
+  get autopilot() {
+    return state.autopilot;
   },
 };
 
@@ -87,6 +92,14 @@ export function setBlackHole(blackHole: boolean) {
 
 export function setNebula(nebula: string | null) {
   state = { ...state, nebula };
+  emit();
+}
+
+// The guided tour. Turning it off leaves the ship wherever it is, so the user
+// simply takes manual control from that view.
+export function setAutopilot(autopilot: boolean) {
+  if (state.autopilot === autopilot) return;
+  state = { ...state, autopilot };
   emit();
 }
 
@@ -127,6 +140,7 @@ if (import.meta.env.DEV) {
     setLevel,
     setBlackHole,
     setNebula,
+    setAutopilot,
     get state() {
       return state;
     },

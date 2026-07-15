@@ -11,6 +11,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { focus, setLevel, useUniverseState } from "./focusStore";
 import { EarthDiveWatcher } from "./EarthDiveWatcher";
 import { Cockpit } from "./Cockpit";
+import { Autopilot } from "./Autopilot";
+import { AutopilotCam } from "./AutopilotCam";
 import { bodyMeshes, telemetry } from "./cockpitBridge";
 import { clearFlyRequest } from "./focusStore";
 
@@ -89,6 +91,7 @@ function LevelWatcher() {
 
   useFrame(() => {
     if (!controls) return;
+    if (focus.autopilot) return; // the tour drives level changes itself
     if (focus.level !== 1) {
       armed.current = false;
       return;
@@ -111,9 +114,10 @@ export function Universe() {
   const { mapOpen, level, blackHole, nebula } = useUniverseState();
   const prevLevel = useRef(level);
 
-  // Coming back down from the stars: reframe the system overview.
+  // Coming back down to the solar system from any higher scale: reframe the
+  // system overview (the autopilot's loop-to-home relies on this too).
   useEffect(() => {
-    if (prevLevel.current === 2 && level === 1) {
+    if (prevLevel.current > 1 && level === 1) {
       controls.current?.setLookAt(6, 42, 96, 0, 0, 0, true);
     }
     prevLevel.current = level;
@@ -137,12 +141,16 @@ export function Universe() {
         <LevelWatcher />
         <FlyController />
         <TelemetryProbe />
+        <AutopilotCam gateLevel={1} speed={0.05} />
         <FrameOnMount controls={controls} />
         <PostFX />
       </Canvas>
 
       {/* home-base cockpit shell (self-gates to level 1) */}
       <Cockpit />
+
+      {/* guided auto-tour — driver + HUD, global across all scales */}
+      <Autopilot />
 
 
       {/* cosmic ladder — each rung crossfades in as you pull far enough out */}

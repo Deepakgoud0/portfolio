@@ -8,6 +8,7 @@ import { PointCloud } from "./PointCloud";
 import { ANCHORS, buildCosmicWeb, N_TOTAL, R_MAX } from "./cosmicWeb";
 import { focus, setLevel } from "./focusStore";
 import { EntryTransition } from "./useEntryTransition";
+import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
 
 // Fly back within this of the origin (Mpc) and the Local Group takes over.
@@ -108,7 +109,7 @@ function ReturnWatcher() {
     };
   }, [controls]);
   useFrame(() => {
-    if (focus.level !== 5) return;
+    if (focus.level !== 5 || focus.autopilot) return;
     if (camera.position.length() < RETURN_DIST) setLevel(4);
   });
   return null;
@@ -133,6 +134,7 @@ export function CosmicWebScene() {
           outStartDist={25}
         />
         <ReturnWatcher />
+        <AutopilotCam speed={0.05} />
         <EffectComposer>
           <Bloom intensity={0.6} luminanceThreshold={0.3} mipmapBlur radius={0.7} />
         </EffectComposer>

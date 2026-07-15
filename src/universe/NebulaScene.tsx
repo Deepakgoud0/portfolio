@@ -5,6 +5,7 @@ import * as THREE from "three";
 import type CameraControlsImpl from "camera-controls";
 import { NEBULAE, SHAPE_ID, nebulaImage, type Nebula } from "./nebulae";
 import { focus, setNebula, useUniverseState } from "./focusStore";
+import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
 
 // ── True 3D nebula ──────────────────────────────────────────────────────────
@@ -254,6 +255,7 @@ function Volume({ nebula }: { nebula: Nebula }) {
     u.uCamToWorld.value.copy(camera.matrixWorld);
     u.uProjInv.value.copy(camera.projectionMatrixInverse);
     if (!controls) return;
+    if (focus.autopilot) return; // the tour opens and closes the nebula itself
     const d = controls.distance;
     if (d < EXIT_DIST - 0.8) armed.current = true;
     // only ever close ourselves — the store may already hold a different nebula
@@ -280,6 +282,7 @@ export function NebulaScene() {
         <Volume nebula={nebula} />
         {/* real 3D gas — orbit it from any angle, fly right inside it */}
         <CameraControls makeDefault minDistance={0.08} maxDistance={5.8} smoothTime={0.6} />
+        <AutopilotCam speed={0.05} />
         <CanvasCleanup />
       </Canvas>
 

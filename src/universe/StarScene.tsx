@@ -9,6 +9,7 @@ import { StarField } from "./StarField";
 import { Nebulae } from "./NebulaField";
 import { focus, setLevel, useUniverseState } from "./focusStore";
 import { EntryTransition } from "./useEntryTransition";
+import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
 
 // Closer to Sol than this and we drop back into the solar system. Kept well
@@ -160,7 +161,7 @@ function ReturnWatcher() {
   }, [controls]);
 
   useFrame(() => {
-    if (focus.level !== 2) return;
+    if (focus.level !== 2 || focus.autopilot) return;
     // Distance to Sol (origin) — robust to panning, unlike controls.distance.
     const d = camera.position.length();
     if (d < RETURN_DIST) setLevel(1);
@@ -195,6 +196,7 @@ export function StarScene() {
           outStartDist={6}
         />
         <ReturnWatcher />
+        <AutopilotCam speed={0.07} />
         <EffectComposer>
           <Bloom intensity={0.7} luminanceThreshold={0.25} mipmapBlur radius={0.6} />
         </EffectComposer>
