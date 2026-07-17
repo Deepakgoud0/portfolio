@@ -11,6 +11,7 @@ import { focus, setLevel } from "./focusStore";
 import { EntryTransition } from "./useEntryTransition";
 import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
+import { sceneDpr } from "./perf";
 
 // Fly back within this of the Milky Way (kpc) and the galaxy scene takes over.
 // Comfortably outside the 15.5 kpc stellar disc and its satellites' orbits.
@@ -185,7 +186,7 @@ export function LocalGroupScene() {
       <Canvas
         camera={{ position: [200, 620, -900], fov: 50, near: 1, far: 20000 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
-        dpr={[1, 1.5]}
+        dpr={sceneDpr([1, 1.5], [1, 1.2])}
       >
         <MilkyWay />
         {spirals.map((m) => (
@@ -215,7 +216,7 @@ export function LocalGroupScene() {
         <CanvasCleanup />
       </Canvas>
 
-      <div className="pointer-events-none absolute left-5 top-5 rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur">
+      <div className="pointer-events-none absolute left-5 top-5 max-w-[calc(100vw-11rem)] rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur">
         The Local Group · {MEMBERS.length + 1} of ~80 members
         <span className="block text-white/55">
           two big spirals and a crowd of dwarfs, across ~3 megaparsecs of mostly nothing
@@ -232,7 +233,7 @@ export function LocalGroupScene() {
         ↩ Back to the Milky Way
       </button>
 
-      <div className="pointer-events-none absolute bottom-5 left-5 font-mono text-[11px] leading-relaxed text-white/45">
+      <div className="pointer-events-none absolute bottom-5 left-5 hidden font-mono text-[11px] leading-relaxed text-white/45 sm:block">
         left-drag — rotate · right-drag — move · scroll — zoom to cursor
         <span className="block text-white/30">
           fly home for the Milky Way · zoom out for the cosmic web

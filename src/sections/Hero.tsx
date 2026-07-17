@@ -74,6 +74,15 @@ export function Hero() {
               Get in touch
             </a>
           </Magnetic>
+          <Magnetic>
+            {/* opt into the full 3D experience on devices that default to this site */}
+            <a
+              href="?universe=1"
+              className="inline-block rounded-full border border-lime/40 px-6 py-3 font-mono text-sm text-lime transition-colors hover:bg-lime/10"
+            >
+              ◆ Enter the 3D universe
+            </a>
+          </Magnetic>
         </motion.div>
       </div>
 

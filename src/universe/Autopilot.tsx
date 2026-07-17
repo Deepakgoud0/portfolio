@@ -193,8 +193,11 @@ export function Autopilot() {
     return () => clearTimeout(timer);
   }, [autopilot]);
 
-  // Sit above the solar dashboard at level 1; drop to the corner elsewhere.
-  const posClass = level === 1 ? "bottom-[7.5rem]" : "bottom-8";
+  // Level 1: above the solar dashboard — except on phones, where the stacked
+  // dashboard (and project card) own the bottom, so it docks up top instead.
+  // Other levels: bottom centre (their corner hints are hidden on phones).
+  const posClass =
+    level === 1 ? "top-[4.5rem] sm:top-auto sm:bottom-[7.5rem]" : "bottom-8";
 
   return (
     <div

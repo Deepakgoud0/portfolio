@@ -52,7 +52,7 @@ export function ShipsLog({ onClose }: { onClose: () => void }) {
         className="relative flex max-h-[86vh] w-full max-w-2xl flex-col border border-white/12 bg-black/80 shadow-2xl backdrop-blur-xl"
       >
         {/* header */}
-        <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-6 py-4">
+        <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6">
           <div>
             <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/40">
               Ship's Log
@@ -71,7 +71,7 @@ export function ShipsLog({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* scrolling body */}
-        <div className="space-y-9 overflow-y-auto px-6 py-6">
+        <div className="space-y-9 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6">
           {/* 01 — DOSSIER */}
           <section>
             <SectionLabel n="01">Dossier</SectionLabel>

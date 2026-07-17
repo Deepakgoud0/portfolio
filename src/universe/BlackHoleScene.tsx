@@ -6,6 +6,7 @@ import type CameraControlsImpl from "camera-controls";
 import { focus, setBlackHole } from "./focusStore";
 import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
+import { sceneDpr } from "./perf";
 
 // ── Sagittarius A* — a ray-marched Schwarzschild black hole ─────────────────
 // Each pixel fires a photon that we integrate through curved spacetime:
@@ -218,7 +219,7 @@ export function BlackHoleScene() {
       <Canvas
         camera={{ position: [0, 3.2, 15], fov: 55, near: 0.01, far: 2000 }}
         gl={{ antialias: false }}
-        dpr={[1, 1.6]}
+        dpr={sceneDpr([1, 1.6], [0.85, 1.1])}
       >
         <BlackHole />
         <CameraControls makeDefault minDistance={4.5} maxDistance={44} smoothTime={0.5} />
@@ -226,7 +227,7 @@ export function BlackHoleScene() {
         <CanvasCleanup />
       </Canvas>
 
-      <div className="pointer-events-none absolute left-5 top-5 max-w-sm rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur">
+      <div className="pointer-events-none absolute left-5 top-5 max-w-[calc(100vw-11rem)] rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur sm:max-w-sm">
         Sagittarius A* · supermassive black hole
         <span className="block text-white/55">
           4.3 million M☉ · the gravitational anchor of the Milky Way
@@ -244,7 +245,7 @@ export function BlackHoleScene() {
         ↩ Back to the galaxy
       </button>
 
-      <div className="pointer-events-none absolute bottom-5 left-5 font-mono text-[11px] leading-relaxed text-white/45">
+      <div className="pointer-events-none absolute bottom-5 left-5 hidden font-mono text-[11px] leading-relaxed text-white/45 sm:block">
         drag — orbit · scroll — zoom
         <span className="block text-white/30">
           the bright side is matter racing toward you at near light-speed

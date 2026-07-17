@@ -211,7 +211,7 @@ export function Cockpit() {
 
       {/* top centre — flight mode tag + recenter (hidden while the tour flies) */}
       {!autopilot && (
-        <div className="pointer-events-none absolute left-1/2 top-5 -translate-x-1/2 text-center">
+        <div className="pointer-events-none absolute left-1/2 top-5 hidden -translate-x-1/2 text-center sm:block">
           <div className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/30">
             ◇ manual flight ◇
           </div>
@@ -245,15 +245,16 @@ export function Cockpit() {
         <NavComputer activeKey={key} />
       </div>
 
-      {/* project detail — appears when a waypoint is selected */}
+      {/* project detail — appears when a waypoint is selected; sits above the
+          stacked dashboard on phones */}
       {activeProject && (
-        <div className="absolute bottom-36 right-5">
+        <div className="absolute bottom-[18.5rem] right-3 sm:bottom-36 sm:right-5">
           <ProjectCard body={activeProject} />
         </div>
       )}
 
-      {/* bottom dashboard */}
-      <div className="absolute inset-x-3 bottom-3 flex items-stretch gap-3">
+      {/* bottom dashboard — stacks on phones, single row from sm up */}
+      <div className="absolute inset-x-3 bottom-3 flex flex-col gap-2 sm:flex-row sm:items-stretch sm:gap-3">
         {/* identity */}
         <Panel className="flex flex-col justify-center px-5 py-3">
           <Label>Pilot · {PILOT.callsign}</Label>
@@ -269,13 +270,13 @@ export function Cockpit() {
           </div>
         </Panel>
 
-        {/* telemetry */}
-        <Panel className="min-w-[15rem]">
+        {/* telemetry — decorative; not worth the vertical space on phones */}
+        <Panel className="hidden min-w-[15rem] sm:block">
           <Telemetry locationLabel="SOLAR SYSTEM" />
         </Panel>
 
         {/* comms */}
-        <Panel className="ml-auto flex flex-col justify-center px-4 py-3">
+        <Panel className="flex flex-col justify-center px-4 py-3 sm:ml-auto">
           <Label>Comms</Label>
           <div className="mt-1.5 grid grid-cols-2 gap-1.5">
             {COMMS.map((c) => (

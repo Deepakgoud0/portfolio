@@ -7,6 +7,7 @@ import { NEBULAE, SHAPE_ID, nebulaImage, type Nebula } from "./nebulae";
 import { focus, setNebula, useUniverseState } from "./focusStore";
 import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
+import { sceneDpr } from "./perf";
 
 // ── True 3D nebula ──────────────────────────────────────────────────────────
 // A photograph holds no information about a nebula from any other angle, so we
@@ -277,7 +278,7 @@ export function NebulaScene() {
       <Canvas
         camera={{ position: [0, 0.5, 2.9], fov: 55, near: 0.01, far: 100 }}
         gl={{ antialias: false }}
-        dpr={[0.7, 1.1]}
+        dpr={sceneDpr([0.7, 1.1], [0.6, 0.85])}
       >
         <Volume nebula={nebula} />
         {/* real 3D gas — orbit it from any angle, fly right inside it */}
@@ -286,7 +287,7 @@ export function NebulaScene() {
         <CanvasCleanup />
       </Canvas>
 
-      <div className="pointer-events-none absolute left-5 top-5 max-w-sm rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur">
+      <div className="pointer-events-none absolute left-5 top-5 max-w-[calc(100vw-11rem)] rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur sm:max-w-sm">
         {nebula.name}
         <span className="block capitalize text-white/55">
           {nebula.type} nebula · {nebula.shape} · {ly.toLocaleString()} light-years
@@ -303,7 +304,7 @@ export function NebulaScene() {
         ↩ Back to the stars
       </button>
 
-      <div className="pointer-events-none absolute bottom-5 left-5 font-mono text-[11px] leading-relaxed text-white/45">
+      <div className="pointer-events-none absolute bottom-5 left-5 hidden font-mono text-[11px] leading-relaxed text-white/45 sm:block">
         drag — orbit any angle · scroll — fly inside the gas
         <span className="block text-white/25">colour source: NASA / ESA / Hubble</span>
       </div>

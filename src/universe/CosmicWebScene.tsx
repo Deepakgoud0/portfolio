@@ -10,6 +10,7 @@ import { focus, setLevel } from "./focusStore";
 import { EntryTransition } from "./useEntryTransition";
 import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
+import { sceneDpr } from "./perf";
 
 // Fly back within this of the origin (Mpc) and the Local Group takes over.
 // Its ~1 Mpc span is a speck here, so anywhere near home hands off.
@@ -121,7 +122,7 @@ export function CosmicWebScene() {
       <Canvas
         camera={{ position: [230, 170, 420], fov: 55, near: 0.5, far: 8000 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
-        dpr={[1, 1.5]}
+        dpr={sceneDpr([1, 1.5], [1, 1.2])}
       >
         <Web />
         <Home />
@@ -141,7 +142,7 @@ export function CosmicWebScene() {
         <CanvasCleanup />
       </Canvas>
 
-      <div className="pointer-events-none absolute left-5 top-5 max-w-md rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur">
+      <div className="pointer-events-none absolute left-5 top-5 max-w-[calc(100vw-11rem)] rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur sm:max-w-md">
         The cosmic web · large-scale structure
         <span className="block text-white/55">
           {(N_TOTAL / 1000) | 0}k galaxies · filaments &amp; voids · 1 unit = 1 megaparsec
@@ -159,7 +160,7 @@ export function CosmicWebScene() {
         ↩ Back to the Local Group
       </button>
 
-      <div className="pointer-events-none absolute bottom-5 left-5 max-w-lg font-mono text-[11px] leading-relaxed text-white/45">
+      <div className="pointer-events-none absolute bottom-5 left-5 hidden max-w-lg font-mono text-[11px] leading-relaxed text-white/45 sm:block">
         left-drag — rotate · right-drag — move · scroll — zoom to cursor
         <span className="block text-white/30">
           this is the top of the ladder — beyond the filaments lies the cosmic horizon,

@@ -11,6 +11,7 @@ import { focus, setLevel, useUniverseState } from "./focusStore";
 import { EntryTransition } from "./useEntryTransition";
 import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
+import { sceneDpr } from "./perf";
 
 // Closer to Sol than this and we drop back into the solar system. Kept well
 // inside the nearest star (Rigil Kentaurus, 1.3 pc) so you can fly among the
@@ -178,7 +179,7 @@ export function StarScene() {
       <Canvas
         camera={{ position: [0, 22, 85], near: 0.05, far: 9000, fov: 55 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
-        dpr={[1, 1.5]}
+        dpr={sceneDpr([1, 1.5], [1, 1.2])}
         frameloop={nebula ? "never" : "always"}
       >
         <Suspense fallback={null}>
@@ -203,7 +204,7 @@ export function StarScene() {
         <CanvasCleanup />
       </Canvas>
 
-      <div className="pointer-events-none absolute left-5 top-5 rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur">
+      <div className="pointer-events-none absolute left-5 top-5 max-w-[calc(100vw-11rem)] rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur">
         Stellar neighbourhood
         <span className="block text-white/55">
           109,400 real stars · HYG catalogue · 1 unit = 1 parsec
@@ -217,7 +218,7 @@ export function StarScene() {
         ↩ Back to Sol
       </button>
 
-      <div className="pointer-events-none absolute bottom-5 left-5 font-mono text-[11px] leading-relaxed text-white/45">
+      <div className="pointer-events-none absolute bottom-5 left-5 hidden font-mono text-[11px] leading-relaxed text-white/45 sm:block">
         left-drag — rotate · right-drag — move · scroll — zoom to cursor
         <span className="block text-white/30">
           zoom in on Sol for its solar system · zoom out for the galaxy

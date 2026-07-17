@@ -11,6 +11,7 @@ import { focus, setBlackHole, setLevel, useUniverseState } from "./focusStore";
 import { EntryTransition } from "./useEntryTransition";
 import { AutopilotCam } from "./AutopilotCam";
 import { CanvasCleanup } from "./CanvasCleanup";
+import { sceneDpr } from "./perf";
 
 // Fly within this of the Sun (kpc) and we drop back to the stellar neighbourhood,
 // whose 700 pc bubble is comfortably inside it.
@@ -133,7 +134,7 @@ export function GalaxyScene() {
       <Canvas
         camera={{ position: [0, 19, 33], fov: 50, near: 0.05, far: 4000 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
-        dpr={[1, 1.5]}
+        dpr={sceneDpr([1, 1.5], [1, 1.2])}
         frameloop={blackHole ? "never" : "always"}
       >
         <Galaxy />
@@ -162,7 +163,7 @@ export function GalaxyScene() {
         <CanvasCleanup />
       </Canvas>
 
-      <div className="pointer-events-none absolute left-5 top-5 rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur">
+      <div className="pointer-events-none absolute left-5 top-5 max-w-[calc(100vw-11rem)] rounded-lg bg-black/60 px-3 py-2 font-mono text-[11px] leading-relaxed text-lime backdrop-blur">
         Milky Way · barred spiral
         <span className="block text-white/55">
           {N_TOTAL.toLocaleString()} points · 1 unit = 1 kiloparsec
@@ -179,7 +180,7 @@ export function GalaxyScene() {
         ↩ Back to Sol
       </button>
 
-      <div className="pointer-events-none absolute bottom-5 left-5 font-mono text-[11px] leading-relaxed text-white/45">
+      <div className="pointer-events-none absolute bottom-5 left-5 hidden font-mono text-[11px] leading-relaxed text-white/45 sm:block">
         left-drag — rotate · right-drag — move · scroll — zoom to cursor
         <span className="block text-white/30">
           fly to the Sol marker for its stars · zoom out for the Local Group

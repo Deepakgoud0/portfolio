@@ -16,6 +16,7 @@ import { AutopilotCam } from "./AutopilotCam";
 import { ShipsLog } from "./ShipsLog";
 import { bodyMeshes, telemetry } from "./cockpitBridge";
 import { clearFlyRequest, setLogOpen } from "./focusStore";
+import { sceneDpr } from "./perf";
 
 // Each scale/dive is its own chunk, fetched only when you actually travel there.
 // The solar system is what loads up front; MapLibre (the Earth dive) and the star
@@ -129,7 +130,7 @@ export function Universe() {
       <Canvas
         camera={{ position: [6, 42, 96], fov: 50, near: 0.1, far: 2000 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
-        dpr={[1, 2]}
+        dpr={sceneDpr([1, 2], [1, 1.5])}
         frameloop={level === 1 && !mapOpen ? "always" : "demand"}
       >
         <Suspense fallback={null}>
